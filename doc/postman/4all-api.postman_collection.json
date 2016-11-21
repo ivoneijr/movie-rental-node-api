@@ -1,0 +1,229 @@
+{
+	"variables": [],
+	"info": {
+		"name": "4all-api",
+		"_postman_id": "1be9bf4d-1bbf-e9cb-8579-741221bb9198",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"url": "127.0.0.1:9999/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "//Authorization",
+						"value": "Token token=3c897fa3098770eef3ed71e314d4c2b1",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\" : \"arianne\",\n    \"email\" : \"arianne@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"url": "127.0.0.1:9999/logout",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "//Authorization",
+						"value": "Token token=3c897fa3098770eef3ed71e314d4c2b1",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"ivonei\",\n    \"password\" : \"ivoneijr\",\n    \"email\" : \"ivoneijr@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/users",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"ivonei\",\n    \"password\" : \"ivoneijr\",\n    \"email\" : \"ivoneijr@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/:id",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/users/a496f2e4-05e3-46e0-a22d-8f47dcb46845",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"ivonei\",\n    \"password\" : \"ivoneijr\",\n    \"email\" : \"ivoneijr@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "//Authorization",
+						"value": "Token token=3c897fa3098770eef3ed71e314d4c2b1",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"testenewuser\",\n    \"password\" : \"testenewuser\",\n    \"email\" : \"testenewuser@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "movies?title=",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/movies?title=1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "movies",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/movies",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "rents/rent",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/rents/rent",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"movie_id\" : \"9d62ef53-29ae-42ca-9ce1-b332b752edb9\",\n\t\"store_id\" : \"24c37620-51eb-4666-8b37-6aaab9e14f41\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "rents/:id/devolve",
+			"request": {
+				"url": "127.0.0.1:9999/api/v1/rents/416f4d46-11d5-430d-8a5e-e8221281796a/devolve",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Token token=28bc4016-1960-4726-9094-4eb86972178c",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

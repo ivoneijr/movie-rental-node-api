@@ -1,0 +1,381 @@
+#%RAML 0.8
+title: 4all-test
+version: 1
+baseUri: http://localhost:9999/api/v{version}
+documentation:
+  - title: Bem vindo!
+    content: |
+      Esta documentação tem objetivo auxiliar desenvovledores no processo de integração com [**4all-test-api**]().
+  
+  - title: Ambiente
+    content: |
+      Antes de fazer as requisições desta API, certifique-se de que existe um banco POSTGRES chamado [**rental**]() 
+      e não esqueça de rodar o script [**db/schema.sql**]().
+  
+  - title: Atenticação
+    content: |
+      Todos os end-points identificados com [Secured by **Authorization**]() devem conter em suas requisições 
+      o cabeçalho http "Authorization" contendo o token de acesso.
+      
+      Para adquirir o token de acesso basta fazer login no end-point [**/api/v1/login**]().
+      ```javascript
+        Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+      ```
+  - title: Testes
+    content: |
+      Para fins de teste o arquivo [**doc/postman/4all-api.postman_collection.json**]() 
+      contém exemplos de requisições utilizadas durante o desenvolvimento.
+      Arquivo pode ser importado na extensão [postman-rest-client](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) do google chrome.
+  
+  
+     
+securitySchemes:
+  - Unauthenticated: !include unauthenticated.raml
+  
+  - oauth_1_0:
+      description: OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+      type: OAuth 1.0
+      settings:
+        requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+        authorizationUri: https://www.dropbox.com/1/oauth/authorize
+        tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+  - x-something:
+      description: The proprietary x-something header.
+      type: x-{other}
+      describedBy:
+        headers:
+          X-SOMETHING:
+            type: string
+            description: For sending an additional token.
+        responses:
+          401:
+            description: Bad token.
+  - Authorization:
+      description: Requisição protegida por Authorization token.
+      type: x-{other}
+      describedBy:
+        headers:
+          Authorization:
+            type: string
+            description: Token authentication header.
+            example: |
+              Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+        
+traits:
+  - paged:
+      queryParameters:
+        page_size:
+          description: The number of items per page
+          type: number
+          default: 20
+        page:
+          description: The page to return
+          type: number
+          default: 0
+      headers:
+        TESTING:
+          type: string
+          description: does a trait render its headers?
+
+/api/v1/login:
+  description: |
+    Login
+  post:
+    description: |
+      Loga e cria sessão na API.
+    body:
+      application/json:
+        example: |
+          {
+            "email": "john@example.com",
+            "password": "$up3r_$3cr3t"
+          }
+    responses:
+      200:
+        description: Usuário logado com sessão criada. Retorna token de acesso.
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Logged in.",
+                "access_token": "f500e0d9-a3f5-403a-a152-eb0e15afc848"
+              }
+/api/v1/logout:
+  description: |
+    Logout
+  get:
+    description: |
+      Encerra sessão na API.
+    responses:
+      200:
+        description: Encerra sessão com mensagem.
+        body:
+          application/json:
+            example: |
+              { "message": "Logged out." }
+              
+/api/v1/users:
+  description: |
+    Users / Usuários
+  post:
+    description: |
+      Cria um novo usuário.
+    body:
+      application/json:
+        example: |
+          {
+            "email": "john@example.com",
+            "password": "$up3r_$3cr3t",
+            "name": "John Doe"
+          }
+    responses:
+      201:
+        description: Usuário criado mas **não** logado.
+        headers:
+          Location:
+            type: string
+            description: Path para novo usuário criado.
+            example: |
+              Location: /api/v1/users/94f7f67b-f819-4d7c-9103-20c089110341
+  get:
+    securedBy: [Authorization]
+    description: |
+      Lista de todos os usuários.
+    queryParameters:
+      limit:
+        description: Limita número de usuários retornados da api.
+        required: false
+        example: /api/v1/users?limit=10
+      offset:
+        description: Indica qual "pagina" deve retornar.
+        required: false
+        example: /api/v1/users?offset=3
+    responses:
+      200: 
+        description: Retorna lista de usuários.
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": "a496f2e4-05e3-46e0-a22d-8f47dcb46845",
+                  "name": "annasuzel",
+                  "email": "anna@gmail.com"
+                },
+                {
+                  "id": "4f80fd55-c044-4aed-b421-72b195908343",
+                  "name": "ivonei",
+                  "email": "ivoneijr@gmail.com"
+                },
+                {
+                  "id": "1db05473-a36b-4b5f-9271-29e5a2d3be84",
+                  "name": "arianne",
+                  "email": "arianne@gmail.com"
+                }
+              ]
+  /{id}:
+    get:
+      securedBy: [Authorization]
+      description: Retorna informações de um usuário específico.
+      responses:
+        200: 
+          description: Retorna perfil de usuário.
+          body:
+            application/json:
+              example: |
+                {
+                  "id": "a496f2e4-05e3-46e0-a22d-8f47dcb46845",
+                  "name": "annasuzel",
+                  "email": "anna@gmail.com"
+                }
+/api/v1/movies:
+  description: |
+    Movies / Filmes
+  get:
+    securedBy: [Authorization]
+    description: |
+      Lista de filmes cadastrados no sistema.
+    queryParameters:
+      title:
+        description: Conteúdo para busca de filme por título. Na ausência deste parâmetro a API retorna todos os 100 primeiros filmes cadastrados.
+        required: false
+        example: /api/v1/movies?title=avengers
+      limit:
+        description: Limita número de filmes retornados da api.
+        required: false
+        example: /api/v1/movies?limit=10
+      offset:
+        description: Indica qual "pagina" deve retornar.
+        required: false
+        example: /api/v1/movies?offset=3
+    responses:
+      200: 
+        description: Retorna lista de filmes.
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "title": "The avengers",
+                  "director": "director1",
+                  "created_at": "18:07:05.176595"
+                },
+                {
+                  "title": "The avengers 2",
+                  "director": "director51",
+                  "created_at": "18:07:05.176595"
+                }
+              ]
+  /{id}:
+    get:
+      securedBy: [Authorization]
+      description: Retorna informações específicas um filme com a lista de locadoras que possuem este título.
+      responses:
+        200: 
+          description: Retorna informações específicas de um filme com a lista de locadoras que possuem este título.
+          body:
+            application/json:
+              example: |
+                {
+                  "id": "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+                  "title": "title1",
+                  "director": "director1",
+                  "stores": [
+                    {
+                      "id": "690c0e3a-5d6f-4d2d-a7d3-cc9423861ca3",
+                      "name": "locadora 2",
+                      "copies": 10,
+                      "rents": 0,
+                      "available": 10
+                    },
+                    {
+                      "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+                      "name": "locadora 1",
+                      "copies": 10,
+                      "rents": 9,
+                      "available": 1
+                    }
+                  ]
+                }
+/api/v1/stores:
+  description: |
+    Stores / Locadoras
+  get:
+    securedBy: [Authorization]
+    description: |
+      Lista de locadoras cadastrados no sistema.
+    queryParameters:
+      limit:
+        description: Limita número de resultados retornados da api.
+        required: false
+        example: /api/v1/stores?limit=10
+      offset:
+        description: Indica qual "pagina" deve retornar.
+        required: false
+        example: /api/v1/stores?offset=3
+    responses:
+      200: 
+        description: Retorna lista de locadoras.
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+                  "name": "locadora 1"
+                },
+                {
+                  "id": "690c0e3a-5d6f-4d2d-a7d3-cc9423861ca3",
+                  "name": "locadora 2"
+                }
+              ]
+  /{id}:
+    get:
+      securedBy: [Authorization]
+      description: Retorna informações específicas de uma locadora com a lista de filmes disponíveis.
+      responses:
+        200: 
+          description: Retorna informações específicas de uma locadora com a lista de filmes disponíveis.
+          body:
+            application/json:
+              example: |
+                {
+                  "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+                  "name": "locadora 1",
+                  "movies": [
+                    {
+                      "id": "5861551a-2fd9-41d9-b8e6-ac3f348524a1",
+                      "title": "title3",
+                      "director": "director1",
+                      "copies": 10,
+                      "rents": 9,
+                      "available": 1
+                    },
+                    {
+                      "id": "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+                      "title": "title1",
+                      "director": "director1",
+                      "copies": 10,
+                      "rents": 9,
+                      "available": 1
+                    }
+                  ]
+                }
+
+/api/v1/rents:
+  description: |
+    Rents / Aluguéis
+  /rent:
+    post:
+      securedBy: [Authorization]
+      description: |
+        Para fazer o alguel de um filme. é necessário informar identificação do filme, identificação da locadora e o token de autorização do usuário logado.
+      body:
+        application/json:
+          example: |
+            {
+              "movie_id" : "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+              "store_id" : "24c37620-51eb-4666-8b37-6aaab9e14f41"
+            }
+      responses:
+        201:
+          description: Aluguel efetuado.
+          headers:
+            Location:
+              type: string
+              description: Path para informações do aluguel.
+              example: |
+                Location: /api/v1/users/94f7f67b-f819-4d7c-9103-20c089110341
+          body:
+            description: Retorna informações da locação sinalizando quando o filme deve ser devolvido (3 dias após o aluguel). **should_return_at**
+            application/json:
+              example: |
+                {
+                  "id": "7549196c-c047-4e87-9153-ad005d26c5a2",
+                  "user_id": "1db05473-a36b-4b5f-9271-29e5a2d3be84",
+                  "movies_stores_id": "c4ee0e6b-4b73-49da-a2f4-60611f19a365",
+                  "should_return_at": "2016-11-15T15:05:41.183Z",
+                  "returned_at": null,
+                  "created_at": "2016-11-12T15:05:41.183Z",
+                  "updated_at": "2016-11-12T15:05:41.183Z"
+                }
+  /{id}/devolve:
+    uriParameters:
+      id:
+        type: string
+        description: Identificação do aluguel.
+        example: |
+          /api/v1/rents/7549196c-c047-4e87-9153-ad005d26c5a2/devolve
+    patch:
+      securedBy: [Authorization]
+      description: |
+        End-point para devolução de filme.
+      responses:
+        200:
+          description: Retorna mensagem personalizada nos casos de o usuário já ter entregue o filme ou estar entregando o filme antes ou após o prazo.
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Title delivered before deadline! Have a nice day! ;)"
+                }

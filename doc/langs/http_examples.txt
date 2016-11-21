@@ -1,0 +1,78 @@
+POST /login HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Cache-Control: no-cache
+Postman-Token: b7c0a4c7-9161-21d8-58b1-36c8bd2b711a
+{
+	"password" : "arianne",
+  "email" : "arianne@gmail.com"
+}
+
+
+GET /logout HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Cache-Control: no-cache
+Postman-Token: c7f4a583-aaff-1eaf-dca2-713952244e8e
+
+
+GET /api/v1/users HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Authorization: Token token=02665d40-87aa-4ad5-b9c9-511acedb57d9
+Cache-Control: no-cache
+Postman-Token: 09ba0e57-a72e-48b9-3da9-e5109852f924
+
+
+GET /api/v1/users/a496f2e4-05e3-46e0-a22d-8f47dcb46845 HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Authorization: Token token=28bc4016-1960-4726-9094-4eb86972178c
+Cache-Control: no-cache
+Postman-Token: 36c025a1-cf97-04c8-8d95-b2fdaaedd5aa
+
+
+POST /api/v1/users HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Cache-Control: no-cache
+Postman-Token: d15484a8-b399-c122-dc25-8cd83beb2ef3
+{
+	"name" : "testenewuser",
+  "password" : "testenewuser",
+  "email" : "testenewuser@gmail.com"
+}
+
+
+GET /api/v1/movies?title=1 HTTP/1.1
+Host: 127.0.0.1:9999
+Authorization: Token token=28bc4016-1960-4726-9094-4eb86972178c
+Cache-Control: no-cache
+Postman-Token: aa3f4d1a-6e33-da3f-7e7c-e3b7fd2e358c
+
+
+GET /api/v1/movies HTTP/1.1
+Host: 127.0.0.1:9999
+Authorization: Token token=28bc4016-1960-4726-9094-4eb86972178c
+Cache-Control: no-cache
+Postman-Token: f02756ec-5013-462a-6e34-8d726ba37b58
+
+
+POST /api/v1/rents/rent HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Authorization: Token token=28bc4016-1960-4726-9094-4eb86972178c
+Cache-Control: no-cache
+Postman-Token: 248cb82d-1f4b-6f3a-9829-de7b0eccbf29
+{
+	"movie_id" : "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+	"store_id" : "24c37620-51eb-4666-8b37-6aaab9e14f41"
+}
+
+PATCH /api/v1/rents/416f4d46-11d5-430d-8a5e-e8221281796a/devolve HTTP/1.1
+Host: 127.0.0.1:9999
+Content-Type: application/json
+Authorization: Token token=28bc4016-1960-4726-9094-4eb86972178c
+Cache-Control: no-cache
+Postman-Token: cf44cd7b-88d7-5452-19e9-0f4cb7f4a10a
+

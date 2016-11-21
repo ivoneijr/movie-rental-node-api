@@ -1,0 +1,283 @@
+<!DOCTYPE HTML><html><head><title>4all-test API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 3.0.1"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>4all-test API documentation <small>version 1</small></h1><p>http://localhost:9999/api/v1</p><h3 id="Bem-vindo-"><a href="#Bem-vindo-">Bem vindo!</a></h3><p>Esta documentação tem objetivo auxiliar desenvovledores no processo de integração com <a><strong>4all-test-api</strong></a>.</p><h3 id="Ambiente"><a href="#Ambiente">Ambiente</a></h3><p>Antes de fazer as requisições desta API, certifique-se de que existe um banco POSTGRES chamado <a><strong>rental</strong></a> e não esqueça de rodar o script <a><strong>db/schema.sql</strong></a>.</p><h3 id="Atentica--o"><a href="#Atentica--o">Atenticação</a></h3><p>Todos os end-points identificados com <a>Secured by <strong>Authorization</strong></a> devem conter em suas requisições o cabeçalho http "Authorization" contendo o token de acesso.</p><p>Para adquirir o token de acesso basta fazer login no end-point <a><strong>/api/v1/login</strong></a>.</p><pre><code class="lang-javascript">  Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</code></pre><h3 id="Testes"><a href="#Testes">Testes</a></h3><p>Para fins de teste o arquivo <a><strong>doc/postman/4all-api.postman_collection.json</strong></a> contém exemplos de requisições utilizadas durante o desenvolvimento. Arquivo pode ser importado na extensão <a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop">postman-rest-client</a> do google chrome.</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_login" class="panel-title">/api/v1/login</h3></div><div class="panel-body"><div class="top-resource-description"><p>Login</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_login"><span class="parent"></span>/api/v1/login</a> <span class="methods"><a href="#api_v1_login_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_v1_login" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_login_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Loga e cria sessão na API.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_login_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/v1/login</h4></div><div class="modal-body"><div class="alert alert-info"><p>Loga e cria sessão na API.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_login_post_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_login_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_login_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "email": "john@example.com",
+  "password": "$up3r_$3cr3t"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_login_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Usuário logado com sessão criada. Retorna token de acesso.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "message": "Logged in.",
+  "access_token": "f500e0d9-a3f5-403a-a152-eb0e15afc848"
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_logout" class="panel-title">/api/v1/logout</h3></div><div class="panel-body"><div class="top-resource-description"><p>Logout</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_logout"><span class="parent"></span>/api/v1/logout</a> <span class="methods"><a href="#api_v1_logout_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_v1_logout" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_logout_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Encerra sessão na API.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_logout_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/api/v1/logout</h4></div><div class="modal-body"><div class="alert alert-info"><p>Encerra sessão na API.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_logout_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_logout_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Encerra sessão com mensagem.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{ "message": "Logged out." }
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_users" class="panel-title">/api/v1/users</h3></div><div class="panel-body"><div class="top-resource-description"><p>Users / Usuários</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_users"><span class="parent"></span>/api/v1/users</a> <span class="methods"><a href="#api_v1_users_post"><span class="badge badge_post">post</span></a> <a href="#api_v1_users_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_users" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_users_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Cria um novo usuário.</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#api_v1_users_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Lista de todos os usuários.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_users_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/v1/users</h4></div><div class="modal-body"><div class="alert alert-info"><p>Cria um novo usuário.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_users_post_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_users_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_users_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "email": "john@example.com",
+  "password": "$up3r_$3cr3t",
+  "name": "John Doe"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_users_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Usuário criado mas <strong>não</strong> logado.</p><h3>Headers</h3><ul><li><strong>Location</strong>: <em>(string)</em><p>Path para novo usuário criado.</p><p><strong>Example</strong>:</p><pre>Location: /api/v1/users/94f7f67b-f819-4d7c-9103-20c089110341
+</pre></li></ul></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_users_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/api/v1/users</h4></div><div class="modal-body"><div class="alert alert-info"><p>Lista de todos os usuários.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_users_get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_users_get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_users_get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_users_get_request"><h3>Query Parameters</h3><ul><li><strong>limit</strong>: <em>(string)</em><p>Limita número de usuários retornados da api.</p><p><strong>Example</strong>:</p><pre>/api/v1/users?limit=10</pre></li><li><strong>offset</strong>: <em>(string)</em><p>Indica qual "pagina" deve retornar.</p><p><strong>Example</strong>:</p><pre>/api/v1/users?offset=3</pre></li></ul></div><div class="tab-pane" id="api_v1_users_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna lista de usuários.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "id": "a496f2e4-05e3-46e0-a22d-8f47dcb46845",
+    "name": "annasuzel",
+    "email": "anna@gmail.com"
+  },
+  {
+    "id": "4f80fd55-c044-4aed-b421-72b195908343",
+    "name": "ivonei",
+    "email": "ivoneijr@gmail.com"
+  },
+  {
+    "id": "1db05473-a36b-4b5f-9271-29e5a2d3be84",
+    "name": "arianne",
+    "email": "arianne@gmail.com"
+  }
+]
+</code></pre></div><div class="tab-pane" id="api_v1_users_get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_users__id_"><span class="parent">/api/v1/users</span>/{id}</a> <span class="methods"><a href="#api_v1_users__id__get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_users__id_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_users__id__get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Retorna informações de um usuário específico.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_users__id__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/api/v1/users</span>/{id}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retorna informações de um usuário específico.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_users__id__get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_users__id__get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_users__id__get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_users__id__get_request"><h3>URI Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="api_v1_users__id__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna perfil de usuário.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "id": "a496f2e4-05e3-46e0-a22d-8f47dcb46845",
+  "name": "annasuzel",
+  "email": "anna@gmail.com"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_users__id__get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_movies" class="panel-title">/api/v1/movies</h3></div><div class="panel-body"><div class="top-resource-description"><p>Movies / Filmes</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_movies"><span class="parent"></span>/api/v1/movies</a> <span class="methods"><a href="#api_v1_movies_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_movies" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_movies_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Lista de filmes cadastrados no sistema.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_movies_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/api/v1/movies</h4></div><div class="modal-body"><div class="alert alert-info"><p>Lista de filmes cadastrados no sistema.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_movies_get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_movies_get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_movies_get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_movies_get_request"><h3>Query Parameters</h3><ul><li><strong>title</strong>: <em>(string)</em><p>Conteúdo para busca de filme por título. Na ausência deste parâmetro a API retorna todos os 100 primeiros filmes cadastrados.</p><p><strong>Example</strong>:</p><pre>/api/v1/movies?title=avengers</pre></li><li><strong>limit</strong>: <em>(string)</em><p>Limita número de filmes retornados da api.</p><p><strong>Example</strong>:</p><pre>/api/v1/movies?limit=10</pre></li><li><strong>offset</strong>: <em>(string)</em><p>Indica qual "pagina" deve retornar.</p><p><strong>Example</strong>:</p><pre>/api/v1/movies?offset=3</pre></li></ul></div><div class="tab-pane" id="api_v1_movies_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna lista de filmes.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "title": "The avengers",
+    "director": "director1",
+    "created_at": "18:07:05.176595"
+  },
+  {
+    "title": "The avengers 2",
+    "director": "director51",
+    "created_at": "18:07:05.176595"
+  }
+]
+</code></pre></div><div class="tab-pane" id="api_v1_movies_get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_movies__id_"><span class="parent">/api/v1/movies</span>/{id}</a> <span class="methods"><a href="#api_v1_movies__id__get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_movies__id_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_movies__id__get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Retorna informações específicas um filme com a lista de locadoras que possuem este título.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_movies__id__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/api/v1/movies</span>/{id}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retorna informações específicas um filme com a lista de locadoras que possuem este título.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_movies__id__get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_movies__id__get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_movies__id__get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_movies__id__get_request"><h3>URI Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="api_v1_movies__id__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna informações específicas de um filme com a lista de locadoras que possuem este título.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "id": "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+  "title": "title1",
+  "director": "director1",
+  "stores": [
+    {
+      "id": "690c0e3a-5d6f-4d2d-a7d3-cc9423861ca3",
+      "name": "locadora 2",
+      "copies": 10,
+      "rents": 0,
+      "available": 10
+    },
+    {
+      "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+      "name": "locadora 1",
+      "copies": 10,
+      "rents": 9,
+      "available": 1
+    }
+  ]
+}
+</code></pre></div><div class="tab-pane" id="api_v1_movies__id__get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_stores" class="panel-title">/api/v1/stores</h3></div><div class="panel-body"><div class="top-resource-description"><p>Stores / Locadoras</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_stores"><span class="parent"></span>/api/v1/stores</a> <span class="methods"><a href="#api_v1_stores_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_stores" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_stores_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Lista de locadoras cadastrados no sistema.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_stores_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/api/v1/stores</h4></div><div class="modal-body"><div class="alert alert-info"><p>Lista de locadoras cadastrados no sistema.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_stores_get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_stores_get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_stores_get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_stores_get_request"><h3>Query Parameters</h3><ul><li><strong>limit</strong>: <em>(string)</em><p>Limita número de resultados retornados da api.</p><p><strong>Example</strong>:</p><pre>/api/v1/stores?limit=10</pre></li><li><strong>offset</strong>: <em>(string)</em><p>Indica qual "pagina" deve retornar.</p><p><strong>Example</strong>:</p><pre>/api/v1/stores?offset=3</pre></li></ul></div><div class="tab-pane" id="api_v1_stores_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna lista de locadoras.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+    "name": "locadora 1"
+  },
+  {
+    "id": "690c0e3a-5d6f-4d2d-a7d3-cc9423861ca3",
+    "name": "locadora 2"
+  }
+]
+</code></pre></div><div class="tab-pane" id="api_v1_stores_get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_stores__id_"><span class="parent">/api/v1/stores</span>/{id}</a> <span class="methods"><a href="#api_v1_stores__id__get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_stores__id_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_stores__id__get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Retorna informações específicas de uma locadora com a lista de filmes disponíveis.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_stores__id__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/api/v1/stores</span>/{id}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retorna informações específicas de uma locadora com a lista de filmes disponíveis.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_stores__id__get_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_stores__id__get_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_stores__id__get_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_stores__id__get_request"><h3>URI Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="api_v1_stores__id__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna informações específicas de uma locadora com a lista de filmes disponíveis.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "id": "24c37620-51eb-4666-8b37-6aaab9e14f41",
+  "name": "locadora 1",
+  "movies": [
+    {
+      "id": "5861551a-2fd9-41d9-b8e6-ac3f348524a1",
+      "title": "title3",
+      "director": "director1",
+      "copies": 10,
+      "rents": 9,
+      "available": 1
+    },
+    {
+      "id": "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+      "title": "title1",
+      "director": "director1",
+      "copies": 10,
+      "rents": 9,
+      "available": 1
+    }
+  ]
+}
+</code></pre></div><div class="tab-pane" id="api_v1_stores__id__get_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_v1_rents" class="panel-title">/api/v1/rents</h3></div><div class="panel-body"><div class="top-resource-description"><p>Rents / Aluguéis</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_rents_rent"><span class="parent">/api/v1/rents</span>/rent</a> <span class="methods"><a href="#api_v1_rents_rent_post"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_rents_rent" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_rents_rent_post'" class="list-group-item"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>Para fazer o alguel de um filme. é necessário informar identificação do filme, identificação da locadora e o token de autorização do usuário logado.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_rents_rent_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/api/v1/rents</span>/rent</h4></div><div class="modal-body"><div class="alert alert-info"><p>Para fazer o alguel de um filme. é necessário informar identificação do filme, identificação da locadora e o token de autorização do usuário logado.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_rents_rent_post_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_rents_rent_post_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_rents_rent_post_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_rents_rent_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "movie_id" : "9d62ef53-29ae-42ca-9ce1-b332b752edb9",
+  "store_id" : "24c37620-51eb-4666-8b37-6aaab9e14f41"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_rents_rent_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Aluguel efetuado.</p><h3>Headers</h3><ul><li><strong>Location</strong>: <em>(string)</em><p>Path para informações do aluguel.</p><p><strong>Example</strong>:</p><pre>Location: /api/v1/users/94f7f67b-f819-4d7c-9103-20c089110341
+</pre></li></ul><h3>Body</h3><p><strong>Type: description</strong></p><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "id": "7549196c-c047-4e87-9153-ad005d26c5a2",
+  "user_id": "1db05473-a36b-4b5f-9271-29e5a2d3be84",
+  "movies_stores_id": "c4ee0e6b-4b73-49da-a2f4-60611f19a365",
+  "should_return_at": "2016-11-15T15:05:41.183Z",
+  "returned_at": null,
+  "created_at": "2016-11-12T15:05:41.183Z",
+  "updated_at": "2016-11-12T15:05:41.183Z"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_rents_rent_post_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_v1_rents__id__devolve"><span class="parent">/api/v1/rents</span>/{id}/devolve</a> <span class="methods"><a href="#api_v1_rents__id__devolve_patch"><span class="badge badge_patch">patch <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_api_v1_rents__id__devolve" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_v1_rents__id__devolve_patch'" class="list-group-item"><span class="badge badge_patch">patch <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>End-point para devolução de filme.</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_v1_rents__id__devolve_patch"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_patch">patch <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/api/v1/rents</span>/{id}/devolve</h4></div><div class="modal-body"><div class="alert alert-info"><p>End-point para devolução de filme.</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>Authorization</b><p>Requisição protegida por Authorization token.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#api_v1_rents__id__devolve_patch_request" data-toggle="tab">Request</a></li><li><a href="#api_v1_rents__id__devolve_patch_response" data-toggle="tab">Response</a></li><li><a href="#api_v1_rents__id__devolve_patch_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_v1_rents__id__devolve_patch_request"><h3>URI Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>Identificação do aluguel.</p><p><strong>Example</strong>:</p><pre>/api/v1/rents/7549196c-c047-4e87-9153-ad005d26c5a2/devolve
+</pre></li></ul></div><div class="tab-pane" id="api_v1_rents__id__devolve_patch_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Retorna mensagem personalizada nos casos de o usuário já ter entregue o filme ou estar entregando o filme antes ou após o prazo.</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "message": "Title delivered before deadline! Have a nice day! ;)"
+}
+</code></pre></div><div class="tab-pane" id="api_v1_rents__id__devolve_patch_securedby"><h1>Secured by Authorization</h1><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>(string)</em><p>Token authentication header.</p><p><strong>Example</strong>:</p><pre>Authorization: Token token=6c3f9c87-c842-4ea8-8b02-e7d8af4197cc
+</pre></li></ul></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_v1_login">/api/v1/login</a></li><li><a href="#api_v1_logout">/api/v1/logout</a></li><li><a href="#api_v1_users">/api/v1/users</a></li><li><a href="#api_v1_movies">/api/v1/movies</a></li><li><a href="#api_v1_stores">/api/v1/stores</a></li><li><a href="#api_v1_rents">/api/v1/rents</a></li></ul></div></div></div></div></body></html>
